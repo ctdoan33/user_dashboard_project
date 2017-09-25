@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>New User</title>
+</head>
+<body>
+    <a href="/dashboard"><button>Dashboard</button></a>
+    <a href="/users/edit"><button>Profile</button></a>
+    <a href="/logout"><button>Log off</button></a>
+    <h2>Add a new user</h2>
+    <a href="/dashboard"><button>Return to Dashboard</button></a>
+    <form action="/users/new" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </p>
+        {% endfor %}
+        <p><input type="submit" value="Create"></p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+</head>
+<body>
+    <a href="/dashboard"><button>Dashboard</button></a>
+    <a href="/users/edit"><button>Profile</button></a>
+    <a href="/logout"><button>Log off</button></a>
+    <h2>Welcome {{user.first_name}}</h2>
+    {% if user.admin == 9 %}
+    <h2>Manage Users</h2>
+    <a href="/users/new"><button>Add New</button></a>
+    {% else %}
+    <h2>All Users</h2>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>email</th>
+                <th>created_at</th>
+                <th>user_level</th>
+                {% if user.admin == 9 %}
+                <th>actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in all_users %}
+            <tr>
+                <td>{{row.id}}</td>
+                <td><a href="/users/show/{{row.id}}">{{row.first_name}} {{row.last_name}}</a></td>
+                <td>{{row.email}}</td>
+                <td>{{row.created_at|date:"M d, Y"}}</td>
+                <td>
+                    {% if row.admin == 9 %}
+                    admin
+                    {% else %}
+                    normal
+                    {% endif %}
+                </td>
+                {% if user.admin == 9 %}
+                <td>
+                    <a href="/users/edit/{{row.id}}">edit</a>
+                    <a href="/users/destroy/{{row.id}}">remove</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
